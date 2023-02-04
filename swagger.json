@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3001/api" }],
+  "servers": [{ "url": "https://pets-support-webapp.onrender.com/api" }],
   "tags": [
     {
       "name": "Auth",
