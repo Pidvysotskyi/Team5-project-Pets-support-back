@@ -6,6 +6,6 @@ const { newPetSchema } = require("../../schemas/");
 
 router.post("/add", auth, validation(newPetSchema), ctrlWrapper(ctrl.addPet));
 
-router.delete("/remove", auth, ctrlWrapper(ctrl.removePet));
+router.delete("/remove/:id", auth, ctrlWrapper(ctrl.removePet));
 
 module.exports = router;
