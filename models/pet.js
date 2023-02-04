@@ -4,7 +4,19 @@ const petSchema = Schema(
   {
     name: {
       type: String,
-      required: [true, "Set name for contact"],
+      required: [true, "Set name your pets"],
+    },
+    breed: {
+      type: String,
+      required: [true, "Field breed is requred!"],
+    },
+    comments: {
+      type: String,
+      required: [true, "A few words about your pets"],
+    },
+    date: {
+      type: String,
+      required: [true, "Date should be DD.MM.YYYY"],
     },
   },
   { versionKey: false, timestamps: true }
