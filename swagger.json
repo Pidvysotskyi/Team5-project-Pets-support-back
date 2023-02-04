@@ -1,0 +1,247 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pets support API",
+    "description": "API insrtuctions for web app Pets support",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3001/api" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Provided email or login is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/signout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Token expired"
+          },
+          "401": {
+            "description": "Unauthorised"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password", "name", "address", "phone"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's email",
+            "example": "Olesandr"
+          },
+          "address": {
+            "type": "string",
+            "description": "User's email",
+            "example": "Boryspil, Kyiv"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User's email",
+            "example": "+380960000000"
+          }
+        },
+        "exapmle": {
+          "email": "myEmail@gmail.com",
+          "password": "1q2w3e4r",
+          "name": "Olesandr",
+          "address": "Boryspil, Kyiv",
+          "phone": "+3809700000000"
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Message"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "token": {
+                "type": "string",
+                "description": "Access token"
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "User Olesandr registered successfully",
+          "user": {
+            "name": "Olesandr",
+            "email": "myEmail@gmail.com",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1MDcxMGE4NDVmNDVhODA4YTg4YyIsImlhdCI6MTY3NTUxMzk2OSwiZXhwIjoxNjc1NTQyNzY5fQ.WFMDwRv2d87EUxHv67h4jBMZpuJtIKemwUySa-gPuwQ"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        },
+        "exapmle": {
+          "email": "myEmail@gmail.com",
+          "password": "qwerty123"
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Access token"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              }
+            }
+          }
+        },
+        "example": {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1MDcxMGE4NDVmNDVhODA4YTg4YyIsImlhdCI6MTY3NTUxNTMyNywiZXhwIjoxNjc1NTQ0MTI3fQ.z683naJAIhUtOzOIf2RhqAnRcP_F9KevFktzQm7NweY",
+          "user": {
+            "email": "myEmail@gmail.com"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

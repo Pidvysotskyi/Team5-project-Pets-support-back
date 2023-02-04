@@ -29,6 +29,7 @@ const signup = async (req, res, next) => {
   await User.findByIdAndUpdate(newUser._id, { token });
 
   res.status(201).json({
+    message: `User ${newUser.name} registered successfully`,
     user: {
       name: newUser.name,
       email: newUser.email,
