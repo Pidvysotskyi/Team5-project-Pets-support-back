@@ -5,7 +5,7 @@ const { updatedUserSchema } = require("../../schemas/");
 
 const router = express.Router();
 
-router.patch("/update", auth, validation(updatedUserSchema), ctrlWrapper(ctrl.updateUser));
+router.put("/update", auth, validation(updatedUserSchema), ctrlWrapper(ctrl.updateUser));
 router.get("/get", auth, ctrlWrapper(ctrl.getUser));
 
 module.exports = router;
