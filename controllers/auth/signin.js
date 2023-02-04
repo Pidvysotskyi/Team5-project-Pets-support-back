@@ -6,13 +6,13 @@ const jwt = require("jsonwebtoken");
 const signin = async (req, res, next) => {
   const { password, email } = req.body;
   const user = await User.findOne({ email });
-  if (!user || !user.verify || !user.comparePassword(password)) {
+  if (!user || !user.comparePassword(password)) {
     throw new Unauthorized("Email is wrong or not varified, or password is wrong");
   }
   const payload = {
     id: user._id,
   };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "8h" });
   await User.findByIdAndUpdate(user._id, { token });
 
   res.json({
