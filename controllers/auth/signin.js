@@ -19,7 +19,6 @@ const signin = async (req, res, next) => {
     token,
     user: {
       email: user.email,
-      subscribtion: user.subscription,
     },
   });
 };

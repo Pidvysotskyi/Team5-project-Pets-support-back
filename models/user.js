@@ -12,10 +12,21 @@ const userSchema = Schema(
       required: [true, "Email is required"],
       unique: true,
     },
-    subscription: {
+    name: {
       type: String,
-      enum: ["starter", "pro", "business"],
-      default: "starter",
+      required: [true, "name is required"],
+    },
+    city: {
+      type: String,
+      required: [true, "city is required"],
+    },
+    region: {
+      type: String,
+      required: [true, "region is required"],
+    },
+    birthday: {
+      type: String,
+      required: [true, "birthday is required"],
     },
     token: {
       type: String,
