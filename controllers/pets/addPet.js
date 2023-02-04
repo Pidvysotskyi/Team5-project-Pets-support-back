@@ -1,7 +1,9 @@
 const { Pet } = require("../../models/index");
 
 const addPet = async (req, res, next) => {
-  const newPet = await Pet.create(req.body);
+  const { _id } = req.user;
+
+  const newPet = await Pet.create({ ...req.body, ref: _id });
 
   res.status(201).json(newPet);
 };
