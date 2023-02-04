@@ -2,9 +2,17 @@ const { Schema, model } = require("mongoose");
 
 const newsSchema = Schema(
   {
-    name: {
+    title: {
       type: String,
-      required: [true, "Set name for contact"],
+    },
+    url: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    date: {
+      type: String,
     },
   },
   { versionKey: false, timestamps: true }
