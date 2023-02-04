@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
 const petSchema = Schema(
   {
@@ -17,6 +17,10 @@ const petSchema = Schema(
     date: {
       type: String,
       required: [true, "Date should be DD.MM.YYYY"],
+    },
+    ref: {
+      type: SchemaTypes.ObjectId,
+      ref: "users",
     },
   },
   { versionKey: false, timestamps: true }
