@@ -1,9 +1,13 @@
-// const Contact = require("./contact"); не знаю що це такого модуля немає в мене помилка ???
 const User = require("./user");
 const News = require("./news");
+const Notice = require("./notice");
+const Pet = require("./pet");
+const Service = require("./service");
 
 module.exports = {
-  // Contact,
   User,
   News,
+  Notice,
+  Pet,
+  Service,
 };
