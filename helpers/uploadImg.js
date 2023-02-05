@@ -1,15 +1,16 @@
 const cloudinary = require("cloudinary").v2;
+const { BadRequest } = require("http-errors");
 
-const uploadImg = async avatarPath => {
+const uploadImg = async imagePath => {
   try {
-    const result = await cloudinary.uploader.upload(avatarPath);
+    const result = await cloudinary.uploader.upload(imagePath);
 
     return {
       url: result.url,
       secure_url: result.secure_url,
     };
   } catch (error) {
-    console.log(error);
+    throw new BadRequest();
   }
 };
 
