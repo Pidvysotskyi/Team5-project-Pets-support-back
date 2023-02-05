@@ -1,23 +1,21 @@
 const { User } = require("../../models");
 const fs = require("fs/promises");
 const cloudinary = require("cloudinary").v2;
+const uploadImg = require("../../helpers/uploadImg");
 
 const updateAvatar = async (req, res, next) => {
   if (!req.file) {
     next();
     return;
   }
-  console.log(req.file);
-  const { path: tempUpload } = req.file;
-  console.log(tempUpload, "Temp dir");
-  const { _id } = req.user;
-  console.log(_id, "Users Id");
-  try {
-    const result = await cloudinary.uploader.upload(tempUpload);
-    console.log(result, "отриманий результат");
-    const { url: avatarURL, secure_url } = result;
 
-    console.log(avatarURL, "отриманий аватар");
+  const { path: tempUpload } = req.file;
+
+  const { _id } = req.user;
+
+  try {
+    const result = await uploadImg(tempUpload);
+    const { url: avatarURL, secure_url } = result;
 
     await User.findByIdAndUpdate(_id, { avatarURL }, { new: true });
     await fs.unlink(tempUpload);
