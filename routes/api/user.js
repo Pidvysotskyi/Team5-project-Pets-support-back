@@ -1,11 +1,11 @@
 const express = require("express");
 const { user: ctrl } = require("../../controllers");
-const { validation, ctrlWrapper, auth } = require("../../middlewares");
+const { validation, ctrlWrapper, auth, upload } = require("../../middlewares");
 const { updatedUserSchema } = require("../../schemas/");
 
 const router = express.Router();
 
-router.put("/update", auth, validation(updatedUserSchema), ctrlWrapper(ctrl.updateUser));
+router.put("/update", auth, validation(updatedUserSchema), upload.single("avatar"), ctrlWrapper(ctrl.updateAvatar), ctrlWrapper(ctrl.updateUser));
 router.get("/get", auth, ctrlWrapper(ctrl.getUser));
 
 module.exports = router;

@@ -1,9 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
-cloudinary.config();
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");

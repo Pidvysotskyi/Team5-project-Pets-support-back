@@ -9,7 +9,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "consumes": ["application/json"],
+  "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
   "servers": [{ "url": "https://pets-support-webapp.onrender.com/api" }],
   "tags": [
@@ -251,6 +251,46 @@
           }
         }
       }
+    },
+    "/user/update": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Update information about User",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/updateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateUserResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Token expired"
+          },
+          "401": {
+            "description": "Unauthorised"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -271,26 +311,19 @@
           },
           "name": {
             "type": "string",
-            "description": "User's email",
+            "description": "User's name",
             "example": "Olesandr"
           },
           "address": {
             "type": "string",
-            "description": "User's email",
+            "description": "User's addres City and region",
             "example": "Boryspil, Kyiv"
           },
           "phone": {
             "type": "string",
-            "description": "User's email",
+            "description": "User's phone",
             "example": "+380960000000"
           }
-        },
-        "exapmle": {
-          "email": "myEmail@gmail.com",
-          "password": "1q2w3e4r",
-          "name": "Olesandr",
-          "address": "Boryspil, Kyiv",
-          "phone": "+3809700000000"
         }
       },
       "RegistrationResponse": {
@@ -422,7 +455,7 @@
           }
         }
       },
-      "NewPetResponce": {
+      "NewPetResponse": {
         "type": "object",
         "properties": {
           "name": {
@@ -565,6 +598,81 @@
                   "description": "Date of modification",
                   "example": "2023-02-05T10:06:50.472Z"
                 }
+              }
+            }
+          }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Olesandr"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Date of birth",
+            "example": "12.08.2022"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User's email",
+            "example": "+380960000000"
+          },
+          "city": {
+            "type": "string",
+            "description": "User's addres only City",
+            "example": "Boryspil, Kyiv"
+          }
+        }
+      },
+      "UpdateUserResponse": {
+        "type": "object",
+        "properties": {
+          "message": {},
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Olesandr"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "Date of birth",
+                "example": "12.08.2022"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User's email",
+                "example": "+380960000000"
+              },
+              "city": {
+                "type": "string",
+                "description": "User's addres only City",
+                "example": "Boryspil, Kyiv"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar image URL",
+                "example": "http://res.cloudinary.com/dv7t2zcqq/image/upload/v1675608084/ywcoi1kflryngfzrhkea.webp"
               }
             }
           }

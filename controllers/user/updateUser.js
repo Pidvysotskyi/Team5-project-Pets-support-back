@@ -6,8 +6,14 @@ const updateUser = async (req, res, next) => {
 
   res.json({
     message: "User has been updated",
-    data: {
-      result: updatedUser,
+    user: {
+      _id: updatedUser._id,
+      email: updatedUser.email,
+      name: updatedUser.name,
+      city: updatedUser.city,
+      birthday: updatedUser.birthday,
+      phone: updatedUser.phone,
+      avatarURL: updatedUser.avatarURL,
     },
   });
 };
