@@ -7,8 +7,8 @@ const updateAvatar = async (req, res, next) => {
     next();
     return;
   }
+  console.log(req.file);
   const { path: tempUpload } = req.file;
-  console.log(tempUpload);
   const { _id } = req.user;
   try {
     const { url: avatarURL, secure_url } = await uploadImg(tempUpload);
