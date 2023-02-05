@@ -264,7 +264,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/updateUserRequest"
+                "$ref": "#/components/schemas/UpdateUserRequest"
               }
             }
           }
@@ -275,7 +275,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/updateUserResponse"
+                  "$ref": "#/components/schemas/UpdateUserResponse"
                 }
               }
             }
