@@ -18,6 +18,11 @@ const petSchema = Schema(
       type: String,
       required: [true, "Date should be DD.MM.YYYY"],
     },
+    urlAvatar: {
+      type: String,
+      required: true,
+      default: null,
+    },
     ref: {
       type: SchemaTypes.ObjectId,
       ref: "users",
