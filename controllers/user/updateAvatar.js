@@ -9,9 +9,14 @@ const updateAvatar = async (req, res, next) => {
   }
   console.log(req.file);
   const { path: tempUpload } = req.file;
+  console.log(tempUpload, "Temp dir");
   const { _id } = req.user;
+  console.log(_id, "Users Id");
   try {
+    console.log(uploadImg);
     const { url: avatarURL, secure_url } = await uploadImg(tempUpload);
+
+    console.log(avatarURL);
 
     await User.findByIdAndUpdate(_id, { avatarURL }, { new: true });
     await fs.unlink(tempUpload);
