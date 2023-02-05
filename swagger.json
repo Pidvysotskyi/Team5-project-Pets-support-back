@@ -16,6 +16,14 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "News",
+      "description": "News endpoints"
+    },
+    {
+      "name": "Pets",
+      "description": "User pets endpoint"
     }
   ],
   "paths": {
@@ -52,6 +60,10 @@
           },
           "409": {
             "description": "Provided email already exists",
+            "content": {}
+          },
+          "500": {
+            "description": "Server: Validation error",
             "content": {}
           }
         }
@@ -91,6 +103,10 @@
           "401": {
             "description": "Provided email or login is wrong",
             "content": {}
+          },
+          "500": {
+            "description": "Server: Validation error",
+            "content": {}
           }
         }
       }
@@ -110,6 +126,94 @@
           },
           "401": {
             "description": "Unauthorised"
+          }
+        }
+      }
+    },
+    "/news/getAll": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get all news",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNewsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/pets/add": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Add user pet",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "New Pet object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNewsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorised",
+            "content": {}
+          },
+          "500": {
+            "description": "Server errors: Wrong Id or expired token",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/pets/remove": {
+      "delete": {
+        "tags": ["Pets"],
+        "summary": "Remove user pet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pet's id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -160,14 +264,16 @@
         "properties": {
           "message": {
             "type": "string",
-            "description": "Message"
+            "description": "Message",
+            "example": "User Olesandr registered successfully"
           },
           "user": {
             "type": "object",
             "properties": {
               "name": {
                 "type": "string",
-                "description": "User name"
+                "description": "User name",
+                "example": "Olesandr"
               },
               "email": {
                 "type": "string",
@@ -176,17 +282,10 @@
               },
               "token": {
                 "type": "string",
-                "description": "Access token"
+                "description": "Access token",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1MDcxMGE4NDVmNDVhODA4YTg4YyIsImlhdCI6MTY3NTUxMzk2OSwiZXhwIjoxNjc1NTQyNzY5fQ.WFMDwRv2d87EUxHv67h4jBMZpuJtIKemwUySa-gPuwQ"
               }
             }
-          }
-        },
-        "example": {
-          "message": "User Olesandr registered successfully",
-          "user": {
-            "name": "Olesandr",
-            "email": "myEmail@gmail.com",
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1MDcxMGE4NDVmNDVhODA4YTg4YyIsImlhdCI6MTY3NTUxMzk2OSwiZXhwIjoxNjc1NTQyNzY5fQ.WFMDwRv2d87EUxHv67h4jBMZpuJtIKemwUySa-gPuwQ"
           }
         }
       },
@@ -215,7 +314,8 @@
         "properties": {
           "token": {
             "type": "string",
-            "description": "Access token"
+            "description": "Access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1MDcxMGE4NDVmNDVhODA4YTg4YyIsImlhdCI6MTY3NTUxMzk2OSwiZXhwIjoxNjc1NTQyNzY5fQ.WFMDwRv2d87EUxHv67h4jBMZpuJtIKemwUySa-gPuwQ"
           },
           "user": {
             "type": "object",
@@ -227,20 +327,118 @@
               }
             }
           }
-        },
-        "example": {
-          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGU1MDcxMGE4NDVmNDVhODA4YTg4YyIsImlhdCI6MTY3NTUxNTMyNywiZXhwIjoxNjc1NTQ0MTI3fQ.z683naJAIhUtOzOIf2RhqAnRcP_F9KevFktzQm7NweY",
-          "user": {
-            "email": "myEmail@gmail.com"
+        }
+      },
+      "GetNewsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "item id",
+              "example": "63df690ke4678ssd32093179"
+            },
+            "title": {
+              "type": "string",
+              "description": "Title",
+              "example": "В День ветеринара в столиці пройде безкоштовний тренінг з надання першої допомоги тваринам"
+            },
+            "url": {
+              "type": "string",
+              "description": "Original url",
+              "example": "https://www.kmlvm.com.ua/v-den-veterynara-v-stolytsi-projde-bezkoshtovnyj-trening-z-nadannya-pershoyi-dopomogy-tvarynam/"
+            },
+            "description": {
+              "type": "string",
+              "description": "Detailed description",
+              "example": "В неділю, 14 серпня, в Тимчасовому притулку для тварин ВДНГ пройде тренінг на тему «Надання першої допомоги тваринам..."
+            },
+            "date": {
+              "type": "string",
+              "description": "Date of publication",
+              "example": ""
+            }
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      },
+      "NewPetRequest": {
+        "type": "object",
+        "required": ["email", "breed", "comments"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "example": "Kitty"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet's breed",
+            "example": "Toyger Cat"
+          },
+          "comments": {
+            "type": "string",
+            "description": "User's email",
+            "example": "My sweety cinnabon"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of birth",
+            "example": "12.08.2022"
+          }
+        }
+      },
+      "NewPetResponce": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "example": "Kitty"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet's breed",
+            "example": "Toyger Cat"
+          },
+          "comments": {
+            "type": "string",
+            "description": "User's email",
+            "example": "My sweety cinnabon"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date of birth",
+            "format": "date"
+          },
+          "ref": {
+            "type": "string",
+            "description": "Date of birth",
+            "format": "date"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Date of birth",
+            "format": "date"
+          },
+          "createdAT": {
+            "type": "string",
+            "description": "Date of birth",
+            "format": "date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Date of birth",
+            "format": "date"
+          }
+        }
+      },
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
       }
     }
   }
