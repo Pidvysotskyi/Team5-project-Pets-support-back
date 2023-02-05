@@ -23,7 +23,11 @@
     },
     {
       "name": "Pets",
-      "description": "User pets endpoint"
+      "description": "User pets endpoints"
+    },
+    {
+      "name": "User",
+      "description": "User endpoints"
     }
   ],
   "paths": {
@@ -207,6 +211,7 @@
             "required": true
           }
         ],
+        "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -214,6 +219,35 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/get": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get information about user and his pets",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Token expired"
+          },
+          "401": {
+            "description": "Unauthorised"
           }
         }
       }
@@ -403,7 +437,7 @@
           },
           "comments": {
             "type": "string",
-            "description": "User's email",
+            "description": "Coments",
             "example": "My sweety cinnabon"
           },
           "date": {
@@ -413,23 +447,126 @@
           },
           "ref": {
             "type": "string",
-            "description": "Date of birth",
+            "description": "Reference user Id",
             "format": "date"
           },
           "_id": {
             "type": "string",
-            "description": "Date of birth",
+            "description": "Pet's id",
             "format": "date"
           },
           "createdAT": {
             "type": "string",
-            "description": "Date of birth",
+            "description": "Date of creation",
             "format": "date"
           },
           "updatedAt": {
             "type": "string",
-            "description": "Date of birth",
+            "description": "Date of modification",
             "format": "date"
+          }
+        }
+      },
+      "GetUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "63df690ke4678ssd32093179"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Olesandr"
+              },
+              "city": {
+                "type": "string",
+                "description": "User's city of living",
+                "example": "Boryspil"
+              },
+              "region": {
+                "type": "string",
+                "description": "User's region of living",
+                "example": "Kyiv"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "Date of birth",
+                "example": "Thu Jan 01 1970 00:00:00 GMT+0000 (Coordinated Universal Time)"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "image URL",
+                "example": "//www.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af"
+              },
+              "createdAt": {
+                "type": "string",
+                "description": "Date of creation",
+                "example": "2023-02-05T08:23:26.705Z"
+              },
+              "updatedAt": {
+                "type": "string",
+                "description": "Date of modification",
+                "example": "2023-02-05T10:03:56.866Z"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Pet's id",
+                  "example": "63df690ke4678ssd32093179"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Pet's name",
+                  "example": "Kitty"
+                },
+                "breed": {
+                  "type": "string",
+                  "description": "Pet's breed",
+                  "example": "Toyger Cat"
+                },
+                "comments": {
+                  "type": "string",
+                  "description": "Comments",
+                  "example": "My sweety cinnabon"
+                },
+                "date": {
+                  "type": "string",
+                  "description": "Date of birth",
+                  "example": "12.08.2022"
+                },
+                "ref": {
+                  "type": "string",
+                  "description": "Reference user Id",
+                  "example": "63df677d880d373731c2ae40"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "Date of creation",
+                  "example": "2023-02-05T10:06:50.472Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "description": "Date of modification",
+                  "example": "2023-02-05T10:06:50.472Z"
+                }
+              }
+            }
           }
         }
       },
