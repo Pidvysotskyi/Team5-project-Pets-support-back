@@ -6,6 +6,6 @@ const updatedUserSchema = Joi.object({
   birthday: Joi.date(),
   phone: Joi.string().pattern(/^[0-9\-\+]{9,15}$/),
   city: Joi.string(),
-}).required();
+});
 
 module.exports = updatedUserSchema;
