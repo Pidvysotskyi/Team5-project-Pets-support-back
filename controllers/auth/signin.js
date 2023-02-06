@@ -4,7 +4,10 @@ const { Unauthorized } = require("http-errors");
 const jwt = require("jsonwebtoken");
 
 const signin = async (req, res, next) => {
-  const { password, email } = req.body;
+  const { password, email: reqEmail } = req.body;
+
+  const email = reqEmail.toLowerCase();
+
   const user = await User.findOne({ email });
   if (!user || !user.comparePassword(password)) {
     throw new Unauthorized("Email is wrong or not varified, or password is wrong");

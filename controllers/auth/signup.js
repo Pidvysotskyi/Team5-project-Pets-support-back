@@ -5,7 +5,9 @@ const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res, next) => {
-  const { password, email, name, address, phone } = req.body;
+  const { password, email: reqEmail, name, address, phone } = req.body;
+  const email = reqEmail.toLowerCase();
+
   const user = await User.findOne({ email });
   if (user) {
     throw new Conflict(`email: ${email} in use`);
