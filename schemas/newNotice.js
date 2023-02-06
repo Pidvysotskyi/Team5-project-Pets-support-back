@@ -1,4 +1,4 @@
-const Joi = require('joi')
+const Joi = require('joi').extend(require('@joi/date'))
 
 const newNoticeSchema = Joi.object({
   category: Joi.string()
@@ -6,9 +6,7 @@ const newNoticeSchema = Joi.object({
     .required(),
   title: Joi.string().min(2).max(48).required(),
   name: Joi.string().min(2).max(16),
-  birthday: Joi.string()
-    .pattern(new RegExp('(0[1-9]|[12][0-9]|3[01]).(0[1-9]|1[012]).(19|20)'))
-    .max('now'),
+  birthday: Joi.date().format(['DD.MM.YYYY']).utc(),
   breed: Joi.string().min(2).max(24),
   sex: Joi.string().valid('male', 'female'),
   location: Joi.string().min(4).max(60),
