@@ -1,21 +1,19 @@
-const { Notice } = require('../../models')
-const { NotFound } = require('http-errors')
+const { Notice } = require("../../models");
+const { NotFound } = require("http-errors");
 
 const getUserNotices = async (req, res) => {
-  const { _id: owner, email } = req.user
+  const { _id: owner, email } = req.user;
 
-  const notices = await Notice.find({ owner })
+  const notices = await Notice.find({ owner });
   if (!notices) {
-    throw new NotFound(404)
+    throw new NotFound(404);
   }
 
   res.json({
     code: 200,
-    status: 'success',
-    message: 'Get User created notices',
-    user: email,
+    status: "success",
     data: notices,
-  })
-}
+  });
+};
 
-module.exports = getUserNotices
+module.exports = getUserNotices;
