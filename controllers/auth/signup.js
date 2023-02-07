@@ -1,11 +1,12 @@
 const { User } = require("../../models");
 const { Conflict } = require("http-errors");
 const { SECRET_KEY } = process.env;
+const { getBlankBirthday } = require("../../helpers");
 const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res, next) => {
-  const { password, email: reqEmail, name, address, phone } = req.body;
+  const { password, email: reqEmail, name, location, phone } = req.body;
   const email = reqEmail.toLowerCase();
 
   const user = await User.findOne({ email });
@@ -13,11 +14,12 @@ const signup = async (req, res, next) => {
     throw new Conflict(`email: ${email} in use`);
   }
 
-  const [city, region] = address.split(", ");
+  const [city, region] = location.split(", ");
 
   const avatarURL = gravatar.url(email);
 
-  const birthday = new Date(0);
+  const birthday = getBlankBirthday();
+
   const newUser = new User({ email, avatarURL, name, city, region, phone, birthday });
 
   newUser.setPassword(password);

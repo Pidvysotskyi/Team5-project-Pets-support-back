@@ -1,6 +1,6 @@
 const { Notice } = require("../../models");
 const fs = require("fs/promises");
-const uploadImg = require("../../helpers/uploadImg");
+const { uploadImg } = require("../../helpers");
 
 const addNotice = async (req, res) => {
   const { _id: owner } = req.user;

@@ -1,0 +1,31 @@
+"RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password", "name", "location", "phone"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Olesandr"
+          },
+          "location": {
+            "type": "string",
+            "description": "User's addres City and region",
+            "example": "Boryspil, Kyiv"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User's phone",
+            "example": "+380960000000"
+          }
+        }
+      },

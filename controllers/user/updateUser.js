@@ -2,7 +2,18 @@ const { User } = require("../../models/");
 
 const updateUser = async (req, res, next) => {
   const { _id } = req.user;
-  const updatedUser = await User.findByIdAndUpdate(_id, req.body, { new: true });
+
+  if (req.body.location) {
+    const [city, region] = req.body.location.split(", ");
+
+    const body = { ...req.body, city, region };
+
+    await User.findByIdAndUpdate(_id, body, { new: true });
+  } else {
+    await User.findByIdAndUpdate(_id, req.body, { new: true });
+  }
+
+  const updatedUser = User.findById(_id);
 
   res.json({
     message: "User has been updated",

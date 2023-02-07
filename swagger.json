@@ -297,7 +297,7 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["email", "password", "name", "address", "phone"],
+        "required": ["email", "password", "name", "location", "phone"],
         "properties": {
           "email": {
             "type": "string",
@@ -314,7 +314,7 @@
             "description": "User's name",
             "example": "Olesandr"
           },
-          "address": {
+          "location": {
             "type": "string",
             "description": "User's addres City and region",
             "example": "Boryspil, Kyiv"
@@ -630,9 +630,9 @@
             "description": "User's email",
             "example": "+380960000000"
           },
-          "city": {
+          "location": {
             "type": "string",
-            "description": "User's addres only City",
+            "description": "User's location city and region",
             "example": "Boryspil, Kyiv"
           }
         }

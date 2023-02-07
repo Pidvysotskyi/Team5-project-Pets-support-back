@@ -1,6 +1,6 @@
 const { User } = require("../../models");
 const fs = require("fs/promises");
-const uploadImg = require("../../helpers/uploadImg");
+const { uploadImg } = require("../../helpers");
 
 const updateAvatar = async (req, res, next) => {
   if (!req.file) {

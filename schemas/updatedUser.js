@@ -1,11 +1,14 @@
-const Joi = require("joi");
+const Joi = require("joi").extend(require("@joi/date"));
+const { locationError, phoneError, userNameError } = require("./errors");
+
+const { locationPattern, phonePattern, allLettersPattern } = require("./patterns");
 
 const updatedUserSchema = Joi.object({
-  name: Joi.string(),
+  name: Joi.string().pattern(allLettersPattern).error(userNameError),
   email: Joi.string().email(),
-  birthday: Joi.date(),
-  phone: Joi.string().pattern(/^[0-9\-\+]{9,15}$/),
-  city: Joi.string(),
+  birthday: Joi.date().format(["DD.MM.YYYY"]).utc(),
+  phone: Joi.string().pattern(phonePattern).error(phoneError),
+  location: Joi.string().pattern(locationPattern).error(locationError),
 });
 
 module.exports = updatedUserSchema;
