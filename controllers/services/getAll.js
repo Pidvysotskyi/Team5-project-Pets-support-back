@@ -1,7 +1,9 @@
+const { Service } = require("../../models");
+
 const getAll = async (req, res, next) => {
-  res.json({
-    message: "Get all services",
-  });
+  const Services = await Service.find();
+
+  res.status(200).json(Services);
 };
 
 module.exports = getAll;

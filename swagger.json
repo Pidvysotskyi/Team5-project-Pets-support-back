@@ -22,6 +22,10 @@
       "description": "News endpoints"
     },
     {
+      "name": "Services",
+      "description": "Services endpoints"
+    },
+    {
       "name": "Pets",
       "description": "User pets endpoints"
     },
@@ -160,6 +164,28 @@
         }
       }
     },
+    "/services/getAll": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get all services",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetServicesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/pets/add": {
       "post": {
         "tags": ["Pets"],
@@ -170,7 +196,7 @@
           "description": "New Pet object",
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/NewPetRequest"
               }
@@ -688,10 +714,62 @@
           }
         }
       },
+      "GetServicesResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "item id",
+              "example": "63df690ke4678ssd32093179"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name",
+              "example": "ЛКП ЛЕВ"
+            },
+            "imageURL": {
+              "type": "string",
+              "description": "Image",
+              "example": "https://www.kmlvm.com.ua/v-den-veterynara-v-stolytsi-projde-bezkoshtovnyj-trening-z-nadannya-pershoyi-dopomogy-tvarynam/"
+            },
+            "time": {
+              "type": "array",
+              "description": "Working hours",
+              "items": {
+                "type": "string",
+                "description": "Working hours",
+                "example": "08:00 - 18.00"
+              }
+            },
+            "email": {
+              "type": "string",
+              "description": "email",
+              "example": "barbos@gmail.com"
+            },
+            "address": {
+              "type": "string",
+              "description": "Address",
+              "example": "Grigorenka street, 25"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Phone",
+              "example": "097 345 12 68"
+            }
+          }
+        }
+      },
       "NewPetRequest": {
         "type": "object",
         "required": ["email", "breed", "comments"],
         "properties": {
+          "photo": {
+            "type": "string",
+            "description": "Pet's photo",
+            "format": "binary"
+          },
           "name": {
             "type": "string",
             "description": "Pet's name",

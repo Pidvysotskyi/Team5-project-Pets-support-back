@@ -4,7 +4,21 @@ const serviceSchema = Schema(
   {
     name: {
       type: String,
-      required: [true, "Set name for contact"],
+    },
+    imageURL: {
+      type: String,
+    },
+    time: {
+      type: Array,
+    },
+    address: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    phone: {
+      type: String,
     },
   },
   { versionKey: false, timestamps: true }

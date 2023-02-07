@@ -4,13 +4,7 @@ const { pets: ctrl } = require("../../controllers");
 const { validation, ctrlWrapper, auth, upload } = require("../../middlewares");
 const { newPetSchema } = require("../../schemas");
 
-router.post(
-  "/add",
-  auth,
-  upload.single("avatar"),
-  validation(newPetSchema),
-  ctrlWrapper(ctrl.addPet)
-);
+router.post("/add", auth, upload.single("photo"), validation(newPetSchema), ctrlWrapper(ctrl.addPet));
 router.delete("/remove/:id", auth, ctrlWrapper(ctrl.removePet));
 
 module.exports = router;

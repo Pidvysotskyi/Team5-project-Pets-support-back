@@ -7,7 +7,7 @@ const newNoticeSchema = Joi.object({
   category: Joi.string().valid("lost-found", "in-good-hands", "sell").required(),
   title: Joi.string().min(2).max(48).pattern(allLettersPattern).error(titleError).required(),
   name: Joi.string().min(2).max(16).pattern(allLettersPattern).error(nameError),
-  birthday: Joi.date().format(["DD.MM.YYYY"]).utc(),
+  birthday: Joi.date().min("1-1-1900").max("now").format(["DD.MM.YYYY"]).utc(),
   breed: Joi.string().min(2).max(24).pattern(allLettersPattern).error(breedError),
   sex: Joi.string().valid("male", "female"),
   location: Joi.string().min(4).max(60).pattern(locationPattern).error(locationError).required(),
