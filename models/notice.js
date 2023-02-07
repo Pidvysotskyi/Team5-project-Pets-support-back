@@ -43,6 +43,7 @@ const noticeSchema = Schema(
     },
     comments: {
       type: String,
+      required: [true, "Comment is required"],
     },
     owner: {
       type: Schema.Types.ObjectId,
