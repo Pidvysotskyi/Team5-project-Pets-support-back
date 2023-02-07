@@ -1,36 +1,32 @@
-"/auth/signup": {
+"/notices/current/add": {
       "post": {
-        "tags": ["Auth"],
-        "summary": "User registration",
-        "parameters": [],
+        "tags": ["Notices"],
+        "summary": "Add New Notice",
+        "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "New Pet object",
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/AddNotiseRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/GetNoticesResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
+            "description": "Bad request",
             "content": {}
           },
           "500": {

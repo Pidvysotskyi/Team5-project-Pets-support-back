@@ -29,9 +29,11 @@ const noticeSchema = Schema(
       default: "",
       required: [true, "Sex is required"],
     },
-    location: {
+    city: {
       type: String,
-      required: [true, "Location is required"],
+    },
+    region: {
+      type: String,
     },
     price: {
       type: Number,

@@ -11,7 +11,7 @@
   },
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json"],
-  "servers": [{ "url": "https://pets-support-webapp.onrender.com/api" }],
+  "servers": [{ "url": "https://pets-support-webapp.onrender.com/api" }, { "url": "http://localhost:3001/api" }],
   "tags": [
     {
       "name": "Auth",
@@ -28,6 +28,10 @@
     {
       "name": "User",
       "description": "User endpoints"
+    },
+    {
+      "name": "Notices",
+      "description": "Notices endpoints"
     }
   ],
   "paths": {
@@ -199,7 +203,7 @@
         }
       }
     },
-    "/pets/remove": {
+    "/pets/remove/{id}": {
       "delete": {
         "tags": ["Pets"],
         "summary": "Remove user pet",
@@ -288,6 +292,261 @@
           },
           "401": {
             "description": "Unauthorised"
+          }
+        }
+      }
+    },
+    "/notices/getAll/{category}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get notices by category",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "description": "Notice category",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNoticesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/current/get": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get notices added by current user",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNoticesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/favorite/get": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get user's favorite notices",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNoticesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/get/{noticeId}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Get full information about notice",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "Notics category",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNoticeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "500": {
+            "description": "Server: Validation error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/current/add": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Add New Notice",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "New Pet object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNotiseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddNotiseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "500": {
+            "description": "Server: Validation error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/favorite/add/{noticeId}": {
+      "put": {
+        "tags": ["Notices"],
+        "summary": "Add notice to favorites",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "Notice id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddToFavoriteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "500": {
+            "description": "Server: Validation error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/favorite/remove/{noticeId}": {
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Remove notice from favorite",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "Notice id",
+            "required": true
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveNoticeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/notices/current/remove/{noticeId}": {
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Remove user pet",
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "Notice id",
+            "required": true
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveNoticeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -675,6 +934,314 @@
                 "example": "http://res.cloudinary.com/dv7t2zcqq/image/upload/v1675608084/ywcoi1kflryngfzrhkea.webp"
               }
             }
+          }
+        }
+      },
+      "GetNoticesResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Responce code",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "description": "Response status",
+            "example": "success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "item id",
+                  "example": "63df690ke4678ssd32093179"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                  "example": "sell"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Notice title",
+                  "example": "The cat is lost please help to find"
+                },
+                "birthday": {
+                  "type": "string",
+                  "description": "Pet's birthday",
+                  "example": "13.07.2012"
+                },
+                "breed": {
+                  "type": "string",
+                  "description": "Pet's breed",
+                  "example": "Burmese"
+                },
+                "city": {
+                  "type": "string",
+                  "description": "City where pat is located",
+                  "example": "Boryspil"
+                },
+                "imageURL": {
+                  "type": "string",
+                  "description": "Pet's photo Url",
+                  "example": "http://res.cloudinary.com/dv7t2zcqq/image/upload/v1675794146/wczzjahyklrb0rnolfjm.jpg"
+                },
+                "price": {
+                  "type": "string",
+                  "description": "Pet's price",
+                  "example": 250
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetNoticeResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Responce code",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "description": "Response status",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "item id",
+                "example": "63df690ke4678ssd32093179"
+              },
+              "category": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "title": {
+                "type": "string",
+                "description": "Very nice cat",
+                "example": "sell"
+              },
+              "name": {
+                "type": "string",
+                "description": "Pet's name",
+                "example": "Barry"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "01.12.2022",
+                "example": "sell"
+              },
+              "breed": {
+                "type": "string",
+                "description": "Pet's breed",
+                "example": "Munchkin"
+              },
+              "city": {
+                "type": "string",
+                "description": "Pet's location {City}",
+                "example": "Boryspil"
+              },
+              "region": {
+                "type": "string",
+                "description": "Pet's location {Region}",
+                "example": "Kyiv"
+              },
+              "sex": {
+                "type": "string",
+                "description": "Pet's sex",
+                "example": "male"
+              },
+              "imageURL": {
+                "type": "string",
+                "description": "Pet's photo URL",
+                "example": "http://res.cloudinary.com/dv7t2zcqq/image/upload/v1675800852/pizzieibqoopm61lbum4.jpg"
+              },
+              "price": {
+                "type": "string",
+                "description": "Price for selling",
+                "example": 250
+              },
+              "comments": {
+                "type": "string",
+                "description": "Notice comment",
+                "example": "Eat everything"
+              },
+              "owner": {
+                "type": "string",
+                "description": "Notice owner id",
+                "example": "63dfcc16eee92e797cc8c376"
+              }
+            }
+          }
+        }
+      },
+      "AddNotiseRequest": {
+        "type": "object",
+        "required": ["category", "title", "name", "location", "comments"],
+        "properties": {
+          "photo": {
+            "type": "string",
+            "format": "binary"
+          },
+          "category": {
+            "type": "string",
+            "description": "Notice category from list {lost-found, in-good-hands, sell}",
+            "example": "sell"
+          },
+          "title": {
+            "type": "string",
+            "description": "Notice's title",
+            "example": "The cat is lost please help to find"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet's name",
+            "example": "Jessy"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Pet's birthday",
+            "example": "12.08.2022"
+          },
+          "breed": {
+            "type": "string",
+            "description": "Pet's breed",
+            "example": "Burmese"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet's sex from list {male, female}",
+            "example": "male"
+          },
+          "location": {
+            "type": "string",
+            "description": "Pet's location city and region",
+            "example": "Boryspil, Kyiv"
+          },
+          "price": {
+            "type": "string",
+            "description": "Pet's price",
+            "example": 250
+          },
+          "comments": {
+            "type": "string",
+            "description": "Comments for notice",
+            "example": "Two weeks ago go for a walk"
+          }
+        }
+      },
+      "AddNotiseResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Responce code",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "description": "Response status",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "item id",
+                "example": "63df690ke4678ssd32093179"
+              },
+              "category": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "title": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "birthday": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "breed": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "city": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "imageURL": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              },
+              "price": {
+                "type": "string",
+                "description": "Notice category from list {lost-found, in-good-hands, sell}",
+                "example": "sell"
+              }
+            }
+          }
+        }
+      },
+      "AddToFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Responce code",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "description": "Response status",
+            "example": "success"
+          },
+          "message": {
+            "type": "object",
+            "description": "Message",
+            "example": "The notice have added to favorites"
+          }
+        }
+      },
+      "RemoveNoticeResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Response code",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "description": "Response status",
+            "example": "success"
+          },
+          "message": {
+            "type": "object",
+            "description": "Message",
+            "example": "The notice removed from favorites"
+          },
+          "noticeId": {
+            "type": "object",
+            "description": "Message",
+            "example": "The notice have added to favorites"
           }
         }
       }

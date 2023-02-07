@@ -5,8 +5,8 @@ const { newNoticeSchema } = require("../../schemas/");
 
 const router = express.Router();
 
-router.get("/getAll/:category", auth, ctrlWrapper(ctrl.getAll));
-router.get("/get/:noticeId", auth, ctrlWrapper(ctrl.getbyId));
+router.get("/getAll/:category", ctrlWrapper(ctrl.getAll));
+router.get("/get/:noticeId", ctrlWrapper(ctrl.getbyId));
 router.put("/favorite/add/:noticeId", auth, ctrlWrapper(ctrl.addFavorite));
 router.get("/favorite/get", auth, ctrlWrapper(ctrl.getFavorites));
 router.delete("/favorite/remove/:noticeId", auth, ctrlWrapper(ctrl.removeFavorite));

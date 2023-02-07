@@ -1,4 +1,4 @@
-const allLettersPattern = /^[a-zA-zа-яіїєА-ЯІЇЄ ]+$/;
+const allLettersPattern = /^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/;
 const locationPattern = /^[a-zA-Z]+[,][ ][a-zA-Z]+$/;
 const pricePattern = /^[1-9][0-9]*$/;
 const passwordPattern = /^[^ ]{7,32}$/;
