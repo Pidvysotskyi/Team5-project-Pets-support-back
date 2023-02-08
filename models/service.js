@@ -9,7 +9,7 @@ const serviceSchema = Schema(
       type: String,
     },
     time: {
-      type: Array,
+      type: Object,
     },
     address: {
       type: String,
