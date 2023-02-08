@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
 
 const noticeSchema = Schema(
   {
@@ -41,7 +41,8 @@ const noticeSchema = Schema(
     },
     imageURL: {
       type: String,
-      default: "",
+      default:
+        "https://res.cloudinary.com/dv7t2zcqq/image/upload/v1675701400/cat_dog_blank_nknppv.jpg",
     },
     comments: {
       type: String,
@@ -53,8 +54,8 @@ const noticeSchema = Schema(
     },
   },
   { versionKey: false, timestamps: true }
-);
+)
 
-const Notice = model("notice", noticeSchema);
+const Notice = model("notice", noticeSchema)
 
-module.exports = Notice;
+module.exports = Notice
