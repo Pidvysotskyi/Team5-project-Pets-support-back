@@ -7,7 +7,6 @@ const router = express.Router()
 
 router.get('/getAll/:category', ctrlWrapper(ctrl.getAll))
 router.get('/get/:noticeId', ctrlWrapper(ctrl.getbyId))
-router.get('/get/:search', ctrlWrapper(ctrl.getByKeyword))
 router.put('/favorite/add/:noticeId', auth, ctrlWrapper(ctrl.addFavorite))
 router.get('/favorite/get', auth, ctrlWrapper(ctrl.getFavorites))
 router.delete(

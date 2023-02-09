@@ -6,7 +6,6 @@ const removeFavorite = require('./removeFavorite')
 const addNotice = require('./addNotice')
 const getUserNotices = require('./getUserNotices')
 const removeNotice = require('./removeNotice')
-const getByKeyword = require('./getByKeyword')
 
 module.exports = {
   getAll,
@@ -17,5 +16,4 @@ module.exports = {
   addNotice,
   getUserNotices,
   removeNotice,
-  getByKeyword,
 }
