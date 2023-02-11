@@ -332,6 +332,26 @@
             "in": "path",
             "description": "Notice category",
             "required": true
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "The keyword for search",
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "The page number items to return",
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "integer",
+            "description": "The numbers of items to return",
+            "required": false
           }
         ],
         "responses": {

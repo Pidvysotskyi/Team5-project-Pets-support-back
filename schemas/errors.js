@@ -6,6 +6,7 @@ const locationError = new Error(`The location should consist of two parts (city,
 const passwordError = new Error(`The password must be between 7 and 32 characters long and can contain any character except spaces`);
 const phoneError = new Error(`The phone number must be in the following format: "+380XXXXXXXXX"`);
 const priceError = new Error(`The price should not start from "0"`);
+const emailError = new Error(`The email must be valid`);
 
 module.exports = {
   titleError,
@@ -16,4 +17,5 @@ module.exports = {
   passwordError,
   phoneError,
   priceError,
+  emailError,
 };
