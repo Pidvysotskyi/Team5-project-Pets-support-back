@@ -6,7 +6,7 @@ const categoryList = ['lost-found', 'in-good-hands', 'sell']
 const getAll = async (req, res) => {
   const { category } = req.params
   console.log(category)
-  const { page = 1, limit = 20, keyword = '' } = req.query
+  const { page = 1, limit = 10, keyword = '' } = req.query
   const skip = (page - 1) * limit
 
   if (!categoryList.includes(category)) {
@@ -18,25 +18,28 @@ const getAll = async (req, res) => {
       const result = await Notice.find({ category }, '-createdAt -updatedAt', {
         skip,
         limit,
-      }).populate('owner', 'email')
+      }).populate('owner', 'name email phone')
 
-      const notices = result.map((notice) => {
-        return {
-          _id: notice._id,
-          category: notice.category,
-          title: notice.title,
-          birthday: notice.birthday,
-          breed: notice.breed,
-          city: notice.city,
-          imageURL: notice.imageURL,
-          price: notice.price,
-        }
-      })
+      // const notices = result.map((notice) => {
+      //   return {
+      //     _id: notice._id,
+      //     category: notice.category,
+      //     title: notice.title,
+      //     birthday: notice.birthday,
+      //     breed: notice.breed,
+      //     city: notice.city,
+      //     imageURL: notice.imageURL,
+      //     price: notice.price,
+      //     name: notice.owner.name,
+      //     email: notice.owner.email,
+      //     phone: notice.owner.phone,
+      //   }
+      // })
 
       res.json({
         code: 200,
         status: 'success',
-        data: notices,
+        data: result,
       })
     } else {
       const result = await Notice.find(
@@ -46,20 +49,23 @@ const getAll = async (req, res) => {
           skip,
           limit,
         }
-      ).populate('owner', 'email')
+      ).populate('owner', 'name email phone')
 
-      const notices = result.map((notice) => {
-        return {
-          _id: notice._id,
-          category: notice.category,
-          title: notice.title,
-          birthday: notice.birthday,
-          breed: notice.breed,
-          city: notice.city,
-          imageURL: notice.imageURL,
-          price: notice.price,
-        }
-      })
+      // const notices = result.map((notice) => {
+      //   return {
+      //     _id: notice._id,
+      //     category: notice.category,
+      //     title: notice.title,
+      //     birthday: notice.birthday,
+      //     breed: notice.breed,
+      //     city: notice.city,
+      //     imageURL: notice.imageURL,
+      //     price: notice.price,
+      //     name: notice.owner.name,
+      //     email: notice.owner.email,
+      //     phone: notice.owner.phone,
+      //   }
+      // })
 
       if (result.length === 0) {
         throw new NotFound('404, Nothing found for your request')
@@ -68,7 +74,8 @@ const getAll = async (req, res) => {
       res.json({
         code: 200,
         status: 'success',
-        data: notices,
+        message: 'Get notices by category or keyword',
+        data: result,
       })
     }
   }
