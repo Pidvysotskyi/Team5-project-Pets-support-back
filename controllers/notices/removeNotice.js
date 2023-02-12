@@ -3,11 +3,15 @@ const { NotFound } = require('http-errors')
 
 const removeNotice = async (req, res, next) => {
   const { noticeId } = req.params
+  const { _id: owner } = req.user
 
-  const result = await Notice.findByIdAndDelete(noticeId)
+  const result = await Notice.findOneAndDelete({
+    owner,
+    _id: noticeId,
+  })
 
   if (!result) {
-    throw new NotFound(404, 'Notice Not found')
+    throw new NotFound('404, Notice Not found')
   }
 
   const users = await User.find({ favorite: noticeId })
