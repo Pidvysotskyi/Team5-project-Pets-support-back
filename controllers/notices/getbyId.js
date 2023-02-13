@@ -6,7 +6,7 @@ const getbyId = async (req, res) => {
 
   const notice = await Notice.findById(noticeId).populate(
     'owner',
-    'name email phone'
+    'email phone'
   )
 
   if (!notice) {
@@ -17,7 +17,21 @@ const getbyId = async (req, res) => {
     code: 200,
     status: 'success',
     message: 'Get notices by ID',
-    data: notice,
+    data: {
+      _id: notice._id,
+      category: notice.category,
+      title: notice.title,
+      name: notice.name,
+      birthday: notice.birthday,
+      breed: notice.breed,
+      sex: notice.sex,
+      city: notice.city,
+      price: notice.price,
+      imageURL: notice.imageURL,
+      comments: notice.comments,
+      email: notice.owner.email,
+      phone: notice.owner.phone,
+    },
   })
 }
 

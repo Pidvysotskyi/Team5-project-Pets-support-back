@@ -17,11 +17,15 @@ const getFavorites = async (req, res) => {
       _id: notice._id,
       category: notice.category,
       title: notice.title,
+      name: notice.name,
       birthday: notice.birthday,
       breed: notice.breed,
+      sex: notice.sex,
       city: notice.city,
-      imageURL: notice.imageURL,
       price: notice.price,
+      imageURL: notice.imageURL,
+      comments: notice.comments,
+      owner: notice.owner,
     }
   })
 
