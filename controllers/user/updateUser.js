@@ -13,7 +13,7 @@ const updateUser = async (req, res, next) => {
     await User.findByIdAndUpdate(_id, req.body, { new: true });
   }
 
-  const updatedUser = User.findById(_id);
+  const updatedUser = await User.findById(_id);
 
   res.json({
     message: "User has been updated",
