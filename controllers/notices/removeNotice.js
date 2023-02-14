@@ -25,6 +25,7 @@ const removeNotice = async (req, res, next) => {
     code: 200,
     status: 'success',
     message: 'Remove User notice',
+    noticeId,
   })
 }
 
