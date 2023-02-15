@@ -3,12 +3,24 @@ const { uploadImg } = require("../../helpers");
 
 const addPet = async (req, res, next) => {
   const { _id } = req.user;
-  const { path } = req.file;
 
-  const urlImg = (await uploadImg(path)).url;
+  let newPet;
 
-  const newPet = await Pet.create({ ...req.body, urlAvatar: urlImg, ref: _id });
+  if (req.file) {
+    const { path } = req.file;
+    const urlImg = (await uploadImg(path)).url;
 
+    newPet = await Pet.create({
+      ...req.body,
+      urlAvatar: urlImg,
+      ref: _id,
+    });
+  } else {
+    newPet = await Pet.create({
+      ...req.body,
+      ref: _id,
+    });
+  }
   res.status(201).json(newPet);
 };
 
