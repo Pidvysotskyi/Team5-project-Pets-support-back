@@ -190,7 +190,6 @@
       "post": {
         "tags": ["Pets"],
         "summary": "Add user pet",
-        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "New Pet object",
@@ -209,7 +208,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNewsResponse"
+                  "$ref": "#/components/schemas/NewPetResponse"
                 }
               }
             }
@@ -783,7 +782,7 @@
       },
       "NewPetRequest": {
         "type": "object",
-        "required": ["email", "breed", "comments"],
+        "required": ["name", "breed", "comments"],
         "properties": {
           "photo": {
             "type": "string",
@@ -802,7 +801,7 @@
           },
           "comments": {
             "type": "string",
-            "description": "User's email",
+            "description": "Comments",
             "example": "My sweety cinnabon"
           },
           "date": {
@@ -835,15 +834,20 @@
             "description": "Date of birth",
             "format": "date"
           },
+          "urlAvatar": {
+            "type": "string",
+            "description": "URL for pet photo",
+            "example": "https://res.cloudinary.com/dv7t2zcqq/image/upload/v1675701400/cat_dog_blank_nknppv.jpg"
+          },
           "ref": {
             "type": "string",
             "description": "Reference user Id",
-            "format": "date"
+            "example": "63dfcc16eee92e797cc8c376"
           },
           "_id": {
             "type": "string",
             "description": "Pet's id",
-            "format": "date"
+            "example": "T63edeb2ad4581058a341ae74"
           },
           "createdAT": {
             "type": "string",
