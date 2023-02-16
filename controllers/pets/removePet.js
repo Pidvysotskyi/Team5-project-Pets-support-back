@@ -5,6 +5,7 @@ const removePet = async (req, res, next) => {
   res.status(200).json({
     status: "OK",
     message: "Succssesful",
+    id: req.params.id,
   });
 };
 

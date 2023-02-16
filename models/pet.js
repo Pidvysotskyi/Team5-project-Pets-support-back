@@ -20,8 +20,8 @@ const petSchema = Schema(
     },
     urlAvatar: {
       type: String,
-      required: true,
-      default: null,
+      default:
+        "https://res.cloudinary.com/dv7t2zcqq/image/upload/v1675701400/cat_dog_blank_nknppv.jpg",
     },
     ref: {
       type: SchemaTypes.ObjectId,
