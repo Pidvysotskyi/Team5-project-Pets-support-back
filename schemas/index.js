@@ -3,6 +3,7 @@ const loginUserSchema = require("./loginUser");
 const updatedUserSchema = require("./updatedUser");
 const newPetSchema = require("./newPet");
 const newNoticeSchema = require("./newNotice");
+const updatePetShema = require("./updatePet");
 
 module.exports = {
   newUserSchema,
@@ -10,4 +11,5 @@ module.exports = {
   newNoticeSchema,
   newPetSchema,
   loginUserSchema,
+  updatePetShema,
 };
